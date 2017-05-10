@@ -1,0 +1,393 @@
+> scores <- read.csv("nyc_math_scores.csv")
+> head(scores)
+
+* Filter one district
+> scores_sub <- subset(scores, district == 1)
+
+> hist(subset(scores, district == 2)$Mean.Scale.Score, col = "green")
+
+> par(mfrow = c(2, 3))
+> with(subset(scores_sub, Year == 2006), plot(Grade,Mean.Scale.Score))
+> with(subset(scores_sub, Year == 2007), plot(Grade,Mean.Scale.Score))
+> with(subset(scores_sub, Year == 2008), plot(Grade,Mean.Scale.Score))
+> with(subset(scores_sub, Year == 2007), plot(Grade,Mean.Scale.Score))
+> with(subset(scores_sub, Year == 2007), plot(Grade,Mean.Scale.Score))
+> with(subset(scores_sub, Year == 2011), plot(Grade,Mean.Scale.Score))
+
+* Convert Year into factor
+
+It will be very simple:
+
+* Choose the district and 
+
+
+# Graph grades per district
+score_sub <- subset(scores, district == 1)
+score_sub$Year <- factor(score_sub$Year)
+xyplot(Mean.Scale.Score ~ Grade|Year, data = score_sub, layout = c(6, 1))
+
+
+# Graph of all grades in a particular district
+score_sub_dist <- subset(scores, district == 1)
+score_sub_dist$Grade <- factor(score_sub_dist$Grade)
+> str(score_sub_dist)
+'data.frame':	66 obs. of  16 variables:
+ $ district        : Factor w/ 32 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ Grade           : Factor w/ 6 levels "3","4","5","6",..: 1 2 3 4 5 6 1 2 3 4 ...
+ $ Year            : Factor w/ 11 levels "2006","2007",..: 1 1 1 1 1 1 2 2 2 2 ...
+ $ Category        : Factor w/ 1 level "All Students": 1 1 1 1 1 1 1 1 1 1 ...
+ $ Number.Tested   : int  936 895 798 912 967 881 836 868 870 795 ...
+ $ Mean.Scale.Score: int  673 670 657 659 648 644 679 673 668 667 ...
+ $ Level.1_num     : int  73 80 110 116 153 178 48 68 67 88 ...
+ $ Level1_pct      : num  7.8 8.9 13.8 12.7 15.8 20.2 5.7 7.8 7.7 11.1 ...
+ $ Level.2_num     : int  170 188 233 248 359 349 86 167 195 176 ...
+ $ Level2_pct      : num  18.2 21 29.2 27.2 37.1 39.6 10.3 19.2 22.4 22.1 ...
+ $ Level.3_num     : int  484 422 347 392 326 279 511 440 439 366 ...
+ $ Level3_pct      : num  51.7 47.2 43.5 43 33.7 31.7 61.1 50.7 50.5 46 ...
+ $ Level.4_num     : int  209 205 108 156 129 75 191 193 169 165 ...
+ $ Level4_pct      : num  22.3 22.9 13.5 17.1 13.3 8.5 22.8 22.2 19.4 20.8 ...
+ $ Level.5_num     : int  693 627 455 548 455 354 702 633 608 531 ...
+ $ Level5_pct      : num  74 70.1 57 60.1 47.1 40.2 84 72.9 69.9 66.8 ...
+
+==========================================================================================
+
+scores <- read.csv("nyc_math_scores.csv")
+> scores$district <- factor(scores$district)
+
+> scores$Grade <- factor(scores$Grade)
+
+> scores$Year <- factor(scores$Year)
+
+> library(lattice)
+
+# Read line 
+# Choose a school district
+msg <- “hello”
+name <- readline("Enter your name: ")
+paste(msg,name)
+
+
+
+
+
+
+
+
+
+
+
+==========================================================================================
+
+Thought processing
+[1] "/Users/haroldsimeon/Documents"
+> setwd("/Users/haroldsimeon/Documents/nyc_mathtests")
+> 
+> scores <- read.csv("nyc_math_scores.csv")
+> head(scores)
+  district Grade Year     Category Number.Tested Mean.Scale.Score Level.1_num
+1        1     3 2006 All Students           936              673          73
+2        2     3 2006 All Students          2281              690          79
+3        3     3 2006 All Students          1466              674         113
+4        4     3 2006 All Students          1189              667         123
+5        5     3 2006 All Students          1149              656         181
+6        6     3 2006 All Students          2610              662         336
+  Level1_pct Level.2_num Level2_pct Level.3_num Level3_pct Level.4_num
+1        7.8         170       18.2         484       51.7         209
+2        3.5         169        7.4        1169       51.2         864
+3        7.7         252       17.2         755       51.5         346
+4       10.3         244       20.5         607       51.1         215
+5       15.8         296       25.8         553       48.1         119
+6       12.9         580       22.2        1315       50.4         379
+  Level4_pct Level.5_num Level5_pct
+1       22.3         693       74.0
+2       37.9        2033       89.1
+3       23.6        1101       75.1
+4       18.1         822       69.1
+5       10.4         672       58.5
+6       14.5        1694       64.9
+> 
+> par(mfrow = c(2,3))
+> with(subset(scores, Year == 2006), plot(Grade,Mean.Scale.Score))
+> with(subset(scores, Grade == 3), plot(Year,Mean.Scale.Score))
+> with(subset(scores, Grade == 3, District == 1), plot(Year,Mean.Scale.Score))
+Error in eval(expr, envir, enclos) : object 'District' not found
+> with(subset(scores, Grade == 3, district == 1), plot(Year,Mean.Scale.Score))
+> with(subset(scores, (Grade == 3 & district == 1)), plot(Year,Mean.Scale.Score))
+> 
+> library(lattice)
+> 
+> xyplot(Grade ~ Mean.Scale.Score | Year, data = scores, layout = c(11, 1))
+> xyplot(Year ~ Mean.Scale.Score | Grade, data = scores, layout = c(11, 1))
+> xyplot(Mean.Scale.Score ~ Year| Grade, data = scores, layout = c(6, 1))
+> xyplot(Mean.Scale.Score ~ Grade| Year, data = scores, layout = c(6, 1))
+> xyplot(Mean.Scale.Score ~ Grade| Year, data = scores, layout = c(6, 2))
+> xyplot(Mean.Scale.Score ~ Grade| Year, data = scores, layout = c(6, 1))
+> 
+> score_sub <- subset(scores, district == 1)
+> xyplot(Mean.Scale.Score ~ Grade| Year, data = score_sub, layout = c(6, 1))
+> xyplot(Mean.Scale.Score ~ Grade|Year, data = score_sub, layout = c(6, 1))
+> 
+> head(score_sub)
+    district Grade Year     Category Number.Tested Mean.Scale.Score Level.1_num
+1          1     3 2006 All Students           936              673          73
+33         1     4 2006 All Students           895              670          80
+65         1     5 2006 All Students           798              657         110
+97         1     6 2006 All Students           912              659         116
+129        1     7 2006 All Students           967              648         153
+161        1     8 2006 All Students           881              644         178
+    Level1_pct Level.2_num Level2_pct Level.3_num Level3_pct Level.4_num
+1          7.8         170       18.2         484       51.7         209
+33         8.9         188       21.0         422       47.2         205
+65        13.8         233       29.2         347       43.5         108
+97        12.7         248       27.2         392       43.0         156
+129       15.8         359       37.1         326       33.7         129
+161       20.2         349       39.6         279       31.7          75
+    Level4_pct Level.5_num Level5_pct
+1         22.3         693       74.0
+33        22.9         627       70.1
+65        13.5         455       57.0
+97        17.1         548       60.1
+129       13.3         455       47.1
+161        8.5         354       40.2
+> str(score_sub)
+'data.frame':	66 obs. of  16 variables:
+ $ district        : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ Grade           : int  3 4 5 6 7 8 3 4 5 6 ...
+ $ Year            : int  2006 2006 2006 2006 2006 2006 2007 2007 2007 2007 ...
+ $ Category        : Factor w/ 1 level "All Students": 1 1 1 1 1 1 1 1 1 1 ...
+ $ Number.Tested   : int  936 895 798 912 967 881 836 868 870 795 ...
+ $ Mean.Scale.Score: int  673 670 657 659 648 644 679 673 668 667 ...
+ $ Level.1_num     : int  73 80 110 116 153 178 48 68 67 88 ...
+ $ Level1_pct      : num  7.8 8.9 13.8 12.7 15.8 20.2 5.7 7.8 7.7 11.1 ...
+ $ Level.2_num     : int  170 188 233 248 359 349 86 167 195 176 ...
+ $ Level2_pct      : num  18.2 21 29.2 27.2 37.1 39.6 10.3 19.2 22.4 22.1 ...
+ $ Level.3_num     : int  484 422 347 392 326 279 511 440 439 366 ...
+ $ Level3_pct      : num  51.7 47.2 43.5 43 33.7 31.7 61.1 50.7 50.5 46 ...
+ $ Level.4_num     : int  209 205 108 156 129 75 191 193 169 165 ...
+ $ Level4_pct      : num  22.3 22.9 13.5 17.1 13.3 8.5 22.8 22.2 19.4 20.8 ...
+ $ Level.5_num     : int  693 627 455 548 455 354 702 633 608 531 ...
+ $ Level5_pct      : num  74 70.1 57 60.1 47.1 40.2 84 72.9 69.9 66.8 ...
+> 
+> xyplot(Mean.Scale.Score ~ Grade, data = score_sub, layout = c(6, 1))
+> xyplot(Mean.Scale.Score ~ Grade|Year, data = score_sub, layout = c(6, 1))
+> score_sub$Year <- factor(score_sub$Year)
+> str(score_sub)
+'data.frame':	66 obs. of  16 variables:
+ $ district        : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ Grade           : int  3 4 5 6 7 8 3 4 5 6 ...
+ $ Year            : Factor w/ 11 levels "2006","2007",..: 1 1 1 1 1 1 2 2 2 2 ...
+ $ Category        : Factor w/ 1 level "All Students": 1 1 1 1 1 1 1 1 1 1 ...
+ $ Number.Tested   : int  936 895 798 912 967 881 836 868 870 795 ...
+ $ Mean.Scale.Score: int  673 670 657 659 648 644 679 673 668 667 ...
+ $ Level.1_num     : int  73 80 110 116 153 178 48 68 67 88 ...
+ $ Level1_pct      : num  7.8 8.9 13.8 12.7 15.8 20.2 5.7 7.8 7.7 11.1 ...
+ $ Level.2_num     : int  170 188 233 248 359 349 86 167 195 176 ...
+ $ Level2_pct      : num  18.2 21 29.2 27.2 37.1 39.6 10.3 19.2 22.4 22.1 ...
+ $ Level.3_num     : int  484 422 347 392 326 279 511 440 439 366 ...
+ $ Level3_pct      : num  51.7 47.2 43.5 43 33.7 31.7 61.1 50.7 50.5 46 ...
+ $ Level.4_num     : int  209 205 108 156 129 75 191 193 169 165 ...
+ $ Level4_pct      : num  22.3 22.9 13.5 17.1 13.3 8.5 22.8 22.2 19.4 20.8 ...
+ $ Level.5_num     : int  693 627 455 548 455 354 702 633 608 531 ...
+ $ Level5_pct      : num  74 70.1 57 60.1 47.1 40.2 84 72.9 69.9 66.8 ...
+> xyplot(Mean.Scale.Score ~ Grade|Year, data = score_sub, layout = c(6, 1))
+> 
+> score_dist <- subset(scores, Grade == 3)
+> 
+> xyplot(Mean.Scale.Score ~ Grade*district|Year, data = scores, layout = c(6, 1))
+> xyplot(Mean.Scale.Score ~ Grade|Year, data = scores, layout = c(6, 1))
+> score_dist$Year <- factor(score_dist$Year)
+> xyplot(Mean.Scale.Score ~ district|Year, data = score_dist, layout = c(32, 4))
+> xyplot(Mean.Scale.Score ~ district|Year, data = score_dist, layout = c(32, 1))
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = scores, layout = c(6, 1))
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = scores, layout = c(32, 1))
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = scores, layout = c(32, 2))
+> scores$Year <- factor(scores$Year)
+> scores$Grade <- factor(scores$Grade)
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = scores, layout = c(32, 2))
+> scores <- read.csv("nyc_math_scores.csv")
+> scores$Year <- factor(scores$Year)
+> 
+> scores$district <- factor(scores$district)
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = scores, layout = c(32, 2))
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = scores, layout = c(32, 6))
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = scores, layout = c(32, 10))
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = scores, layout = c(32, 8))
+> score_sub_dist <- subset(sub_dist, district <= 5)
+Error in subset(sub_dist, district <= 5) : object 'sub_dist' not found
+> score_sub_dist <- subset(score_dist, district <= 5)
+> str(score_sub_dist)
+'data.frame':	55 obs. of  16 variables:
+ $ district        : int  1 2 3 4 5 1 2 3 4 5 ...
+ $ Grade           : int  3 3 3 3 3 3 3 3 3 3 ...
+ $ Year            : Factor w/ 11 levels "2006","2007",..: 1 1 1 1 1 2 2 2 2 2 ...
+ $ Category        : Factor w/ 1 level "All Students": 1 1 1 1 1 1 1 1 1 1 ...
+ $ Number.Tested   : int  936 2281 1466 1189 1149 836 2286 1441 1240 1117 ...
+ $ Mean.Scale.Score: int  673 690 674 667 656 679 699 683 676 667 ...
+ $ Level.1_num     : int  73 79 113 123 181 48 35 64 93 117 ...
+ $ Level1_pct      : num  7.8 3.5 7.7 10.3 15.8 5.7 1.5 4.4 7.5 10.5 ...
+ $ Level.2_num     : int  170 169 252 244 296 86 108 177 181 226 ...
+ $ Level2_pct      : num  18.2 7.4 17.2 20.5 25.8 10.3 4.7 12.3 14.6 20.2 ...
+ $ Level.3_num     : int  484 1169 755 607 553 511 1139 792 680 591 ...
+ $ Level3_pct      : num  51.7 51.2 51.5 51.1 48.1 61.1 49.8 55 54.8 52.9 ...
+ $ Level.4_num     : int  209 864 346 215 119 191 1004 408 286 183 ...
+ $ Level4_pct      : num  22.3 37.9 23.6 18.1 10.4 22.8 43.9 28.3 23.1 16.4 ...
+ $ Level.5_num     : int  693 2033 1101 822 672 702 2143 1200 966 774 ...
+ $ Level5_pct      : num  74 89.1 75.1 69.1 58.5 84 93.7 83.3 77.9 69.3 ...
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = scores, layout = c(6, 1))
+> xyplot(Mean.Scale.Score ~ Grade|Year*(district == 1), data = scores, layout = c(6, 1))
+> score_sub_dist <- subset(score_dist, district == 1)
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = scores, layout = c(6, 1))
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = score_dist, layout = c(6, 1))
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = score_sub_dist, layout = c(6, 1))
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = score_sub_dist, layout = c(30, 1))
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = score_sub_dist, layout = c(11, 1))
+> score_sub_dist$Grade <- factor(score_sub_dist$Grade)
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = score_sub_dist, layout = c(11, 1))
+> score_sub_dist <- subset(scores, district == 1)
+> str(score_sub_dist)
+'data.frame':	66 obs. of  16 variables:
+ $ district        : Factor w/ 32 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ Grade           : int  3 4 5 6 7 8 3 4 5 6 ...
+ $ Year            : Factor w/ 11 levels "2006","2007",..: 1 1 1 1 1 1 2 2 2 2 ...
+ $ Category        : Factor w/ 1 level "All Students": 1 1 1 1 1 1 1 1 1 1 ...
+ $ Number.Tested   : int  936 895 798 912 967 881 836 868 870 795 ...
+ $ Mean.Scale.Score: int  673 670 657 659 648 644 679 673 668 667 ...
+ $ Level.1_num     : int  73 80 110 116 153 178 48 68 67 88 ...
+ $ Level1_pct      : num  7.8 8.9 13.8 12.7 15.8 20.2 5.7 7.8 7.7 11.1 ...
+ $ Level.2_num     : int  170 188 233 248 359 349 86 167 195 176 ...
+ $ Level2_pct      : num  18.2 21 29.2 27.2 37.1 39.6 10.3 19.2 22.4 22.1 ...
+ $ Level.3_num     : int  484 422 347 392 326 279 511 440 439 366 ...
+ $ Level3_pct      : num  51.7 47.2 43.5 43 33.7 31.7 61.1 50.7 50.5 46 ...
+ $ Level.4_num     : int  209 205 108 156 129 75 191 193 169 165 ...
+ $ Level4_pct      : num  22.3 22.9 13.5 17.1 13.3 8.5 22.8 22.2 19.4 20.8 ...
+ $ Level.5_num     : int  693 627 455 548 455 354 702 633 608 531 ...
+ $ Level5_pct      : num  74 70.1 57 60.1 47.1 40.2 84 72.9 69.9 66.8 ...
+> score_sub_dist$Grade <- factor(score_sub_dist$Grade)
+> str(score_sub_dist)
+'data.frame':	66 obs. of  16 variables:
+ $ district        : Factor w/ 32 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ Grade           : Factor w/ 6 levels "3","4","5","6",..: 1 2 3 4 5 6 1 2 3 4 ...
+ $ Year            : Factor w/ 11 levels "2006","2007",..: 1 1 1 1 1 1 2 2 2 2 ...
+ $ Category        : Factor w/ 1 level "All Students": 1 1 1 1 1 1 1 1 1 1 ...
+ $ Number.Tested   : int  936 895 798 912 967 881 836 868 870 795 ...
+ $ Mean.Scale.Score: int  673 670 657 659 648 644 679 673 668 667 ...
+ $ Level.1_num     : int  73 80 110 116 153 178 48 68 67 88 ...
+ $ Level1_pct      : num  7.8 8.9 13.8 12.7 15.8 20.2 5.7 7.8 7.7 11.1 ...
+ $ Level.2_num     : int  170 188 233 248 359 349 86 167 195 176 ...
+ $ Level2_pct      : num  18.2 21 29.2 27.2 37.1 39.6 10.3 19.2 22.4 22.1 ...
+ $ Level.3_num     : int  484 422 347 392 326 279 511 440 439 366 ...
+ $ Level3_pct      : num  51.7 47.2 43.5 43 33.7 31.7 61.1 50.7 50.5 46 ...
+ $ Level.4_num     : int  209 205 108 156 129 75 191 193 169 165 ...
+ $ Level4_pct      : num  22.3 22.9 13.5 17.1 13.3 8.5 22.8 22.2 19.4 20.8 ...
+ $ Level.5_num     : int  693 627 455 548 455 354 702 633 608 531 ...
+ $ Level5_pct      : num  74 70.1 57 60.1 47.1 40.2 84 72.9 69.9 66.8 ...
+> xyplot(Mean.Scale.Score ~ Grade|Year*district, data = score_sub_dist, layout = c(11, 1))
+> 
+> head(scores)
+  district Grade Year     Category Number.Tested Mean.Scale.Score Level.1_num
+1        1     3 2006 All Students           936              673          73
+2        2     3 2006 All Students          2281              690          79
+3        3     3 2006 All Students          1466              674         113
+4        4     3 2006 All Students          1189              667         123
+5        5     3 2006 All Students          1149              656         181
+6        6     3 2006 All Students          2610              662         336
+  Level1_pct Level.2_num Level2_pct Level.3_num Level3_pct Level.4_num
+1        7.8         170       18.2         484       51.7         209
+2        3.5         169        7.4        1169       51.2         864
+3        7.7         252       17.2         755       51.5         346
+4       10.3         244       20.5         607       51.1         215
+5       15.8         296       25.8         553       48.1         119
+6       12.9         580       22.2        1315       50.4         379
+  Level4_pct Level.5_num Level5_pct
+1       22.3         693       74.0
+2       37.9        2033       89.1
+3       23.6        1101       75.1
+4       18.1         822       69.1
+5       10.4         672       58.5
+6       14.5        1694       64.9
+> 
+> 
+
+==========================================================================================
+
+***This version is already working***
+
+
+# This is a software to compare and contrast 
+library(shiny)
+
+# Load the data 
+scores <- read.csv("nyc_math_scores.csv")
+scores$district <- factor(scores$district)
+scores$Grade <- factor(scores$Grade)
+scores$Year <- factor(scores$Year)
+
+
+shinyUI(fluidPage(
+    titlePanel("NYC Math Scores"),
+    sidebarLayout(
+        sidebarPanel(
+            textInput("title",
+                      "Plot title:",
+                      value = "Score graphs"),
+            
+            selectInput(inputId = "x", label = "Choose an x variable",
+                        choices = names(scores),
+                        selected = "Year"),
+            
+            selectInput(inputId = "y", label = "Choose a y variable",
+                        choices = names(scores),
+                        selected = "Mean.Scale.Score"),
+            
+            numericInput(inputId = "dist", label = "Selecting a district",
+                         value = 1, min = 1, max =32),
+            
+            numericInput(inputId = "grd", label = "Selecting a grade",
+                         value = 3, min = 3, max = 8)
+            
+        ),
+        
+        # Show a tabset that includes a plot, summary, and table veiw 
+        # of the different graphs for math scores
+        mainPanel(
+            tabsetPanel
+            h3(textOutput("text")),
+            plotOutput("plot")
+        )
+    )
+    
+)
+)
+
+[server.R]
+library(shiny)
+library(lattice)
+
+# Load the data 
+scores <- read.csv("nyc_math_scores.csv")
+districts <- read.csv("district_list.csv")
+
+shinyServer(function(input, output){
+    
+    # Make user specific variables
+    output$text <- renderText({
+        input$title
+    })
+    
+    output$plot <- renderPlot({
+        sub_df <- subset(scores, (district == input$dist & Grade == input$grd))
+        x <- sub_df[, input$x]
+        y <- sub_df[, input$y]
+        xyplot(y ~ x, data = sub_df, grid = TRUE, xlab = input$x,
+               ylab = input$y)
+    
+        })
+})
+
+
+xyplot(Mean.Scale.Score ~ Grade|district*Year, data = sub_df1, layout = c(5,1))
+
+
+
+==========================================================================================
+

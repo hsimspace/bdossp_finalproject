@@ -1,0 +1,12 @@
+---
+- hosts: all
+
+  tasks:
+    - name: Get update
+      command: sudo apt-get update
+    - name: Install R
+      command: sudo apt-get install r-base libapparmor1 gdebi-core
+    - name: Download the R-Studio package
+      command: wget http://download2.rstudio.org/rstudio-server-0.97.336-amd64.deb -O rstudio.deb
+    - name: Install the package
+      command: sudo gdebi rstudio.deb
